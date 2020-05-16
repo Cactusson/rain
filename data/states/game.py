@@ -112,7 +112,7 @@ class Game(tools._State):
                 drop.state = 'DYING'
         if sun_popped:
             for drop in self.drops:
-                if drop.state == 'USUAL' or drop.state == 'TWEENING':
+                if drop.state in ['USUAL', 'TWEENING']:
                     drop.state = 'DYING'
         if score:
             self.gui.user_input.change_color('right', self.current_time)
@@ -166,7 +166,7 @@ class Game(tools._State):
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_ESCAPE:
                 self.done = True
-            elif event.key == pg.K_RETURN or event.key == pg.K_KP_ENTER:
+            elif event.key in [pg.K_RETURN, pg.K_KP_ENTER]:
                 if not self.gui.score.tweening:
                     self.get_input()
             elif event.key == pg.K_BACKSPACE:
@@ -184,14 +184,16 @@ class Game(tools._State):
         Update everything.
         """
         self.current_time = current_time
-        if self.level < self.max_level:
-            if (self.current_time - self.mid_level_timer >
-                    self.mid_level_delay):
-                self.mid_level_timer = self.current_time
-                self.next_level()
-        if self.lose_timer:
-            if self.current_time - self.lose_timer > self.lose_delay:
-                self.done = True
+        if self.level < self.max_level and (
+            self.current_time - self.mid_level_timer > self.mid_level_delay
+        ):
+            self.mid_level_timer = self.current_time
+            self.next_level()
+        if (
+            self.lose_timer
+            and self.current_time - self.lose_timer > self.lose_delay
+        ):
+            self.done = True
         self.generate_drop()
         self.drops.update(dt, self)
         self.particles.update(self.current_time, dt)

@@ -53,10 +53,7 @@ class NumpadButton(pg.sprite.Sprite):
 
     def update(self, mouse_pos, dt):
         hover = self.rect.collidepoint(mouse_pos)
-        if hover:
-            self.image = self.hover_image
-        else:
-            self.image = self.idle_image
+        self.image = self.hover_image if hover else self.idle_image
         self.hover = hover
 
         if self.tweening:

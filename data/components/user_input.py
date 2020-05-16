@@ -80,10 +80,12 @@ class UserInput(pg.sprite.Sprite):
             if self.tween_time > self.tween_duration:
                 self.tweening = False
             self.update_value()
-        if self.color != self.usual_color:
-            if now - self.color_timer > self.color_delay:
-                self.color = self.usual_color
-                self.image.fill(self.color)
+        if (
+            self.color != self.usual_color
+            and now - self.color_timer > self.color_delay
+        ):
+            self.color = self.usual_color
+            self.image.fill(self.color)
 
     def update_value(self):
         self.input_image = self.font.render(self.text, True, pg.Color('black'))

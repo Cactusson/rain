@@ -179,10 +179,7 @@ class Drop(pg.sprite.Sprite):
                 game.lose_a_life()
             else:
                 delta = self.speed * dt
-                if self.rect.centery + delta < 0:
-                    self.rect.centery += delta - 1
-                else:
-                    self.rect.centery += delta
+                self.rect.centery += delta - 1 if self.rect.centery + delta < 0 else delta
         elif self.state == 'DYING':
             self.dying(dt, game)
 

@@ -37,10 +37,7 @@ class Button(pg.sprite.Sprite):
         Check if the button is hovered.
         """
         hover = self.rect.collidepoint(mouse_pos)
-        if hover:
-            self.image = self.hover_image
-        else:
-            self.image = self.idle_image
+        self.image = self.hover_image if hover else self.idle_image
         self.hover = hover
 
     def draw(self, surface):

@@ -39,9 +39,7 @@ class Control(object):
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 self.done = True
-            elif event.type == pg.KEYDOWN:
-                self.keys = pg.key.get_pressed()
-            elif event.type == pg.KEYUP:
+            elif event.type in [pg.KEYDOWN, pg.KEYUP]:
                 self.keys = pg.key.get_pressed()
             self.state.get_event(event)
 
